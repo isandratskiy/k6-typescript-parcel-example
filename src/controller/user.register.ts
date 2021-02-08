@@ -1,7 +1,7 @@
-import {sleep} from "k6";
+import { sleep } from "k6";
 import * as request from "../utils/request";
-import {K6Interceptor} from "../utils/request";
-import {User} from "../types/user.type";
+import { K6Interceptor } from "../utils/request";
+import { User } from "../types/user.type";
 
 const REGISTER_ENDPOINT = "user/register/";
 

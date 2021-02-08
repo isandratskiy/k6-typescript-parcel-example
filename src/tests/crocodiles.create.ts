@@ -1,11 +1,11 @@
 import * as auth from "../controller/user.auth";
 import * as user from "../controller/user.register";
-import {Options} from "k6/options";
+import { Options } from "k6/options";
 import * as fake from "faker";
 import * as rate from "../utils/rates";
-import {createCrocodiles} from "../controller/my.crocodiles";
-import {Crocodile} from "../types/crocodile.type";
-import {User} from "../types/user.type";
+import { createCrocodiles } from "../controller/my.crocodiles";
+import { Crocodile } from "../types/crocodile.type";
+import { User } from "../types/user.type";
 
 export const options: Partial<Options> = {
   vus: 30,

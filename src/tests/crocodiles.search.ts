@@ -1,12 +1,12 @@
 import http from "k6/http";
-import {Options} from "k6/options";
+import { Options } from "k6/options";
 
 export const options: Partial<Options> = {
   scenarios: {
     create: {
       executor: "per-vu-iterations",
       iterations: 15,
-      env: {OFFSET: "10"},
+      env: { OFFSET: "10" },
       maxDuration: "1m",
       gracefulStop: "5s",
       exec: "getCrocodiles",
@@ -14,7 +14,7 @@ export const options: Partial<Options> = {
     get_with_size_15: {
       executor: "per-vu-iterations",
       iterations: 15,
-      env: {OFFSET: "15"},
+      env: { OFFSET: "15" },
       maxDuration: "1m",
       gracefulStop: "5s",
       exec: "getCrocodiles",

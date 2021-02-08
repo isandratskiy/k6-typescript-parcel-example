@@ -1,5 +1,5 @@
-import {Rate} from "k6/metrics";
-import {RefinedResponse} from "k6/http";
+import { Rate } from "k6/metrics";
+import { RefinedResponse } from "k6/http";
 
 const P80 = new Rate("p80_within_3sec");
 
