@@ -29,7 +29,6 @@ jobs:
         run: |
           npm install
           npm run build
-          mkdir ./reports/source
 
       - name: Run 'Create crocodiles' load test
         run: k6 run --summary-trend-stats="${SUMMARY_TREND}" --summary-export=./reports/source/crocodiles_create.json dist/crocodiles.create.js

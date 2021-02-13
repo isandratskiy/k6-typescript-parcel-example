@@ -2,7 +2,7 @@ import * as auth from "../controller/user.auth";
 import * as user from "../controller/user.register";
 import { Options } from "k6/options";
 import * as fake from "faker";
-import * as rate from "../utils/rates";
+import * as rate from "../utils/metrics";
 import { createCrocodiles } from "../controller/my.crocodiles";
 import { Crocodile } from "../types/crocodile.type";
 import { User } from "../types/user.type";
@@ -10,6 +10,10 @@ import { User } from "../types/user.type";
 export const options: Partial<Options> = {
   vus: 30,
   iterations: 100,
+  thresholds: {
+    'p80_within_1sec': ['rate >= 0.8'],
+    'errors_rate': ['rate < 0.1']
+  }
 };
 
 export function setup() {
@@ -34,5 +38,6 @@ export default function (_token: string): void {
 
   createCrocodiles(_token, crocodile, (response) => {
     rate.p80_within_1sec(response);
+    rate.errors(response)
   });
 }

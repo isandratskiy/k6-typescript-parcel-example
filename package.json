@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "parcel build --target k6 src/tests/**.ts",
+    "build": "parcel build --target k6 src/tests/**.ts && mkdir ./reports/source",
     "test": "k6 run dist/crocodiles.create.js",
     "lint": "eslint .",
     "prettier": "prettier --write ."
