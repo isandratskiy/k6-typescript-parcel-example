@@ -44,4 +44,9 @@ jobs:
         if: always()
         run: |
           node ./src/utils/report.js
-          ls ./dist/reports
+
+      - name: Upload K6 Reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: k6 reports
+          path: ./dist/reports
