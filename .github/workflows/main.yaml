@@ -32,7 +32,7 @@ jobs:
           npm run build
 
       - name: Run 'Create crocodiles' load test
-        run: k6 run --summary-trend-stats='$SUMMARY_TREND' --summary-export=$REPORT_FOLDER/crocodiles_create.json dist/crocodiles.create.js
+        run: k6 run --summary-trend-stats='${SUMMARY_TREND}' --summary-export=$REPORT_FOLDER/crocodiles_create.json dist/crocodiles.create.js
 
       - name: Generate HTML Reports
         if: always()
