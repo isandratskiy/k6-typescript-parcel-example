@@ -7,8 +7,6 @@ on:
 jobs:
   test-create-operations:
     runs-on: ubuntu-latest
-    env:
-      REPORT_FOLDER: ./reports/source
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -31,11 +29,12 @@ jobs:
           npm run build
 
       - name: Run 'Create crocodiles' load test
-        run: k6 run --summary-trend-stats='avg,max,min,p(90),p(15),p(5)' --summary-export=$REPORT_FOLDER/crocodiles_create.json dist/crocodiles.create.js
+        run: k6 run --summary-trend-stats='avg,max,min,p(90),p(15),p(5)' --summary-export=./reports/source/crocodiles_create.json dist/crocodiles.create.js
 
       - name: Generate HTML Reports
         if: always()
         run: |
+          echo
           node ./reports/report.js
           ls ./reports
 
