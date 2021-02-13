@@ -1,0 +1,46 @@
+name: Run K6 load tests
+on:
+  push:
+    branches:
+      - '*'
+      - 'master'
+jobs:
+  test-create-operations:
+    runs-on: ubuntu-latest
+    env:
+      REPORT_FOLDER: ./reports/source
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js 12
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 14
+
+      - name: Install K6
+        run: |
+          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 379CE192D401AB61
+          echo "deb https://dl.bintray.com/loadimpact/deb stable main" | sudo tee -a /etc/apt/sources.list
+          sudo apt-get update
+          sudo apt-get install k6
+
+      - name: Build project
+        run: |
+          npm install
+          npm run build
+
+      - name: Run Group create test
+        run: |
+          source .env_int2
+          k6 run --summary-trend-stats='avg,max,min,p(90),p(15),p(5)' --summary-export=$REPORT_FOLDER/crocodiles_create.json dist/crocodiles.create.js
+
+      - name: Generate HTML Reports
+        if: always()
+        run: |
+          node ./reports/report.js
+          ls ./reports
+
+      - name: Uninstall K6
+        if: always()
+        run: sudo yum -y remove k6
