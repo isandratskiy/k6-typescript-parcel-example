@@ -1,8 +1,8 @@
 const reporter = require("k6-html-reporter");
 const fs = require("fs");
 
-const REPORT_FOLDER = "./reports";
-const SOURCE_FOLDER = "./reports/source";
+const REPORT_FOLDER = "./dist/reports";
+const SOURCE_FOLDER = "./dist/source";
 
 fs.readdirSync(SOURCE_FOLDER).forEach((file) => {
   const name = file.replace(".json", "");
