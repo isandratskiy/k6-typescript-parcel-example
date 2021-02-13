@@ -40,7 +40,3 @@ jobs:
           ls ./reports/source
           ls ./reports
           node ./reports/report.js
-
-      - name: Uninstall K6
-        if: always()
-        run: sudo yum -y remove k6
