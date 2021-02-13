@@ -36,9 +36,9 @@ jobs:
       - name: Generate HTML Reports
         if: always()
         run: |
-          echo
-          node ./reports/report.js
+          ls ./reports/source
           ls ./reports
+          node ./reports/report.js
 
       - name: Uninstall K6
         if: always()
