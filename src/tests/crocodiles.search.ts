@@ -22,7 +22,7 @@ export const options: Partial<Options> = {
   },
   thresholds: {
     "http_req_duration{scenario:get_with_size_1}": [
-      "p(80)<3000",
+      "p(80) <3000",
       "p(15)<5000",
       "p(5)<8000",
     ],

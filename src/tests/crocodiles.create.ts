@@ -11,9 +11,9 @@ export const options: Partial<Options> = {
   vus: 30,
   iterations: 100,
   thresholds: {
-    'p80_within_1sec': ['rate >= 0.8'],
-    'errors_rate': ['rate < 0.1']
-  }
+    p80_within_1sec: ["rate >= 0.8"],
+    errors_rate: ["rate < 0.1"],
+  },
 };
 
 export function setup() {
@@ -38,6 +38,6 @@ export default function (_token: string): void {
 
   createCrocodiles(_token, crocodile, (response) => {
     rate.p80_within_1sec(response);
-    rate.errors(response)
+    rate.errors(response);
   });
 }

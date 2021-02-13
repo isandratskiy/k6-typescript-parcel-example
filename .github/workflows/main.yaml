@@ -31,8 +31,17 @@ jobs:
           npm run build
 
       - name: Run 'Create crocodiles' load test
-        run: k6 run --summary-trend-stats="${SUMMARY_TREND}" --summary-export=./dist/source/crocodiles_create.json dist/crocodiles.create.js
+        env:
+          REPORT_SOURCE: ./dist/source/crocodiles_create.json
+        run: k6 run --summary-trend-stats="${SUMMARY_TREND}" --summary-export=$REPORT_SOURCE dist/crocodiles.create.js
+
+      - name: Run 'Search crocodiles' load test
+        env:
+          REPORT_SOURCE: ./dist/source/crocodiles_search.json
+        run: k6 run --summary-trend-stats="${SUMMARY_TREND}" --summary-export=$REPORT_SOURCE dist/crocodiles.search.js
 
       - name: Generate HTML Reports
         if: always()
-        run: node ./src/utils/report.js
+        run: |
+          node ./src/utils/report.js
+          ls ./dist/reports
