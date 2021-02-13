@@ -38,4 +38,4 @@ jobs:
         run: |
           ls ./reports/source
           ls ./reports
-          node ./reports/report.js
+          node ./src/utils/report.js
