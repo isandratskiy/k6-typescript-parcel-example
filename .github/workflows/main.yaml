@@ -35,7 +35,4 @@ jobs:
 
       - name: Generate HTML Reports
         if: always()
-        run: |
-          ls ./reports/source
-          ls ./reports
-          node ./src/utils/report.js
+        run: node ./src/utils/report.js
