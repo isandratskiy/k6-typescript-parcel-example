@@ -30,10 +30,8 @@ jobs:
           npm install
           npm run build
 
-      - name: Run Group create test
-        run: |
-          source .env_int2
-          k6 run --summary-trend-stats='avg,max,min,p(90),p(15),p(5)' --summary-export=$REPORT_FOLDER/crocodiles_create.json dist/crocodiles.create.js
+      - name: Run 'Create crocodiles' load test
+        run: k6 run --summary-trend-stats='avg,max,min,p(90),p(15),p(5)' --summary-export=$REPORT_FOLDER/crocodiles_create.json dist/crocodiles.create.js
 
       - name: Generate HTML Reports
         if: always()
