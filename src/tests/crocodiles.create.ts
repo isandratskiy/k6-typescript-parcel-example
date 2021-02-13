@@ -32,8 +32,6 @@ export default function (_token: string): void {
     date_of_birth: "2020-10-15",
   };
 
-  console.log(JSON.stringify(crocodile));
-
   createCrocodiles(_token, crocodile, (response) => {
     rate.p80_within_1sec(response);
   });
