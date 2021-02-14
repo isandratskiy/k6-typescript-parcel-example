@@ -1,40 +1,66 @@
-import http from "k6/http";
 import { Options } from "k6/options";
+import { User } from "../types/user.type";
+import * as fake from "faker";
+import * as user from "../controller/user.register";
+import * as auth from "../controller/user.auth";
+import {getCrocodiles, prepareCrocodiles} from "../controller/my.crocodiles";
+import * as rate from "../utils/metrics";
 
 export const options: Partial<Options> = {
   scenarios: {
-    create: {
+    get_with_size_15: {
       executor: "per-vu-iterations",
-      iterations: 15,
+      iterations: 100,
+      vus: 30,
       env: { OFFSET: "10" },
       maxDuration: "1m",
       gracefulStop: "5s",
-      exec: "getCrocodiles",
+      exec: "searchCrocodiles",
     },
-    get_with_size_15: {
+    get_with_size_30: {
       executor: "per-vu-iterations",
-      iterations: 15,
-      env: { OFFSET: "15" },
+      iterations: 100,
+      vus: 30,
+      env: { OFFSET: "30" },
       maxDuration: "1m",
       gracefulStop: "5s",
-      exec: "getCrocodiles",
+      exec: "searchCrocodiles",
     },
   },
   thresholds: {
-    "http_req_duration{scenario:get_with_size_1}": [
-      "p(80) <3000",
-      "p(15)<5000",
-      "p(5)<8000",
-    ],
+    errors_rate: ["rate <= 0.1"],
     "http_req_duration{scenario:get_with_size_15}": [
       "p(80)<3000",
       "p(15)<5000",
       "p(5)<8000",
     ],
+    "http_req_duration{scenario:get_with_size_30}": [
+      "p(80)<3000",
+      "p(15)<5000",
+      "p(5)<8000",
+    ],
   },
-  discardResponseBodies: true,
+  discardResponseBodies: false,
 };
 
-export function getCrocodiles() {
-  http.get(`https://test-api.k6.io/public/crocodiles/${__ENV.OFFSET}`);
+export function setup(): string {
+  const userPayload: User = {
+    username: fake.internet.userName(),
+    first_name: fake.name.firstName(),
+    last_name: fake.name.lastName(),
+    email: fake.internet.email(),
+    password: fake.internet.password(),
+  };
+
+  user.register(userPayload);
+  const token = auth.getAuth(userPayload);
+  prepareCrocodiles(token, 50)
+  return token
+}
+
+export function searchCrocodiles(_token: string): void {
+  getCrocodiles(_token, (response) => {
+    rate.p80_within_1sec(response);
+    rate.errors(response, 200);
+  });
 }
