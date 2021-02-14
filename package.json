@@ -1,6 +1,7 @@
 {
   "scripts": {
     "build": "rm -rf ./dist && parcel build --target k6 src/tests/**.ts && mkdir ./dist/reports && mkdir ./dist/source",
+    "clean": "rm -rf ./dist && rm -rf ./parcel-cache",
     "test": "k6 run dist/crocodiles.create.js",
     "lint": "eslint .",
     "prettier": "prettier --write ."

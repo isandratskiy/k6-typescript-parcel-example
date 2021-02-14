@@ -4,6 +4,13 @@ on:
     branches:
       - "*"
       - "master"
+  workflow_dispatch:
+    inputs:
+      generate_report:
+        description: 'Report generation'
+        required: false
+        default: 'false'
+
 jobs:
   test-create-operations:
     runs-on: ubuntu-latest
@@ -41,7 +48,7 @@ jobs:
         run: k6 run --summary-trend-stats="${SUMMARY_TREND}" --summary-export=$REPORT_SOURCE dist/crocodiles.search.js
 
       - name: Generate HTML Reports
-        if: always()
+        if: ${{ github.event.inputs.logLevel }}
         run: |
           node ./src/utils/report.js
 
