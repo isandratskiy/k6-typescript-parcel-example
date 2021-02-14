@@ -54,6 +54,7 @@ jobs:
 
       - name: Upload K6 Reports
         uses: actions/upload-artifact@v2
+        if: ${{ github.event.inputs.logLevel }}
         with:
           name: k6 reports
           path: ./dist/reports
