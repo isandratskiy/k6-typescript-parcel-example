@@ -9,5 +9,5 @@ export function p80_within_1sec(response: RefinedResponse<any>): void {
 }
 
 export function errors(response: RefinedResponse<any>, status: number): void {
-  ERRORS_RATE.add(response.status !== status);
+  ERRORS_RATE.add(response.status == status);
 }
