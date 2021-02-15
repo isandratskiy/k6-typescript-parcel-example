@@ -48,13 +48,13 @@ jobs:
         run: k6 run --summary-trend-stats="${SUMMARY_TREND}" --summary-export=$REPORT_SOURCE dist/crocodiles.search.js
 
       - name: Generate HTML Reports
-        if: ${{ github.event.inputs.logLevel }}
+        if: ${{ github.event.inputs.generate_report }} == 'true'
         run: |
           node ./src/utils/report.js
 
       - name: Upload K6 Reports
         uses: actions/upload-artifact@v2
-        if: ${{ github.event.inputs.logLevel }}
+        if: ${{ github.event.inputs.generate_report }} == 'true'
         with:
           name: k6 reports
           path: ./dist/reports
