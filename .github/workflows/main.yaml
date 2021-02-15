@@ -1,4 +1,5 @@
-name: Run K6 load tests
+name: Run k6 Load Tests
+
 on:
   push:
     branches:
@@ -6,7 +7,7 @@ on:
       - "master"
 
 jobs:
-  test-create-operations:
+  test-crocodiles-controllers:
     runs-on: ubuntu-latest
     env:
       SUMMARY_TREND: avg,max,med,min,p(95),p(90),p(15),p(5)
@@ -32,11 +33,13 @@ jobs:
           npm run build
 
       - name: Run 'Create crocodiles' load test
+        if: always()
         env:
           REPORT_SOURCE: ./dist/source/crocodiles_create.json
         run: k6 run --summary-trend-stats="${SUMMARY_TREND}" --summary-export=$REPORT_SOURCE dist/crocodiles.create.js
 
       - name: Run 'Search crocodiles' load test
+        if: always()
         env:
           REPORT_SOURCE: ./dist/source/crocodiles_search.json
         run: k6 run --summary-trend-stats="${SUMMARY_TREND}" --summary-export=$REPORT_SOURCE dist/crocodiles.search.js
