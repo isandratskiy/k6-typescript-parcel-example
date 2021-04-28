@@ -20,8 +20,8 @@ jobs:
         with:
           node-version: 14
 
-      - name: Install K6
-        uses: isandratskiy/k6-install-action@v1.1
+      - name: Set up k6
+        uses: isandratskiy/k6-setup-action@v1.0.4
 
       - name: Build project
         run: |
