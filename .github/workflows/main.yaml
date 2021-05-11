@@ -9,6 +9,12 @@ on:
 jobs:
   test-crocodiles-controllers:
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        action: [create, search]
+
     env:
       SUMMARY_TREND: avg,max,med,min,p(95),p(90),p(15),p(5)
     steps:
@@ -28,17 +34,11 @@ jobs:
           npm install
           npm run build
 
-      - name: Run 'Create crocodiles' load test
+      - name: Run '${{ matrix.action }} crocodiles' load test
         if: always()
         env:
-          REPORT_SOURCE: ./dist/source/crocodiles_create.json
-        run: k6 run --summary-trend-stats="${SUMMARY_TREND}" --summary-export=$REPORT_SOURCE dist/crocodiles.create.js
-
-      - name: Run 'Search crocodiles' load test
-        if: always()
-        env:
-          REPORT_SOURCE: ./dist/source/crocodiles_search.json
-        run: k6 run --summary-trend-stats="${SUMMARY_TREND}" --summary-export=$REPORT_SOURCE dist/crocodiles.search.js
+          REPORT_SOURCE: ./dist/source/crocodiles_${{ matrix.action }}.json
+        run: k6 run --summary-trend-stats="${SUMMARY_TREND}" --summary-export=$REPORT_SOURCE dist/crocodiles.${{ matrix.action }}.js
 
       - name: Generate HTML Reports
         if: always()

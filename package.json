@@ -1,32 +1,32 @@
 {
-  "scripts": {
-    "build": "rm -rf ./dist && parcel build --target k6 src/tests/**.ts && mkdir ./dist/reports && mkdir ./dist/source",
-    "clean": "rm -rf ./dist && rm -rf ./parcel-cache",
-    "test": "k6 run dist/crocodiles.create.js",
-    "lint": "eslint .",
-    "prettier": "prettier --write ."
-  },
-  "targets": {
-    "k6": {
-      "context": "node",
-      "includeNodeModules": {
-        "k6": false
-      }
-    }
-  },
-  "devDependencies": {
-    "@types/k6": "0.28.3",
-    "@typescript-eslint/eslint-plugin": "4.14.1",
-    "@typescript-eslint/parser": "4.14.1",
-    "@types/faker": "^4.1.12",
-    "faker": "^4.1.0",
-    "eslint": "7.18.0",
-    "parcel": "2.0.0-beta.1",
-    "prettier": "2.2.1",
-    "typescript": "4.1.3",
-    "k6-html-reporter": "0.0.6"
-  },
-  "dependencies": {
-    "k6": "0.0.0"
-  }
+	"scripts": {
+		"build": "rm -rf ./dist && parcel build --target k6 src/test/**.ts && mkdir ./dist/reports && mkdir ./dist/source",
+		"clean": "rm -rf ./dist && rm -rf ./parcel-cache",
+		"test": "k6 run dist/crocodiles.create.js",
+		"lint": "eslint .",
+		"prettier": "prettier --write ."
+	},
+	"targets": {
+		"k6": {
+			"context": "node",
+			"includeNodeModules": {
+				"k6": false
+			}
+		}
+	},
+	"devDependencies": {
+		"@types/k6": "0.28.3",
+		"@typescript-eslint/eslint-plugin": "4.14.1",
+		"@typescript-eslint/parser": "4.14.1",
+		"@types/faker": "^4.1.12",
+		"faker": "^4.1.0",
+		"eslint": "7.18.0",
+		"parcel": "2.0.0-beta.1",
+		"prettier": "2.2.1",
+		"typescript": "4.1.3",
+		"k6-html-reporter": "0.0.6"
+	},
+	"dependencies": {
+		"k6": "0.0.0"
+	}
 }
