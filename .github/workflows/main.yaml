@@ -1,6 +1,7 @@
 name: Run k6 Load Tests
 
 on:
+ workflow_dispatch: 
  push:
   branches:
    - '*'
