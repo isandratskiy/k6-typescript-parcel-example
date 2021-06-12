@@ -1,7 +1,7 @@
 name: Run k6 Load Tests
 
 on:
- workflow_dispatch: 
+ workflow_dispatch:
  push:
   branches:
    - '*'
@@ -37,7 +37,7 @@ jobs:
 
    - name: Build project
      run: |
-      yarn
+      yarn --frozen-lockfile
       yarn build
 
    - name: Run '${{ matrix.action }} crocodiles' load test
