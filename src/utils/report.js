@@ -13,8 +13,5 @@ fs.readdirSync(SOURCE_FOLDER).forEach(file => {
 
 	reporter.generateSummaryReport(options);
 
-	fs.renameSync(
-		`${REPORT_FOLDER}/report.html`,
-		`${REPORT_FOLDER}/${name}.html`
-	);
+	fs.renameSync(`${REPORT_FOLDER}/report.html`, `${REPORT_FOLDER}/${name}.html`);
 });
