@@ -1,10 +1,10 @@
-import { Options } from 'k6/options';
-import { User } from '../types/user.type';
-import * as fake from 'faker';
-import * as user from '../controller/user.register';
-import * as auth from '../controller/user.auth';
-import { getCrocodiles, prepareCrocodiles } from '../controller/my.crocodiles';
-import * as rate from '../utils/metrics';
+import { Options } from 'k6/options'
+import { User } from '../types/user.type'
+import * as fake from 'faker'
+import * as user from '../controller/user.register'
+import * as auth from '../controller/user.auth'
+import { getCrocodiles, prepareCrocodiles } from '../controller/my.crocodiles'
+import * as rate from '../utils/metrics'
 
 export const options: Partial<Options> = {
 	scenarios: {
@@ -41,7 +41,7 @@ export const options: Partial<Options> = {
 		]
 	},
 	discardResponseBodies: false
-};
+}
 
 export function setup(): string {
 	const userPayload: User = {
@@ -50,17 +50,17 @@ export function setup(): string {
 		last_name: fake.name.lastName(),
 		email: fake.internet.email(),
 		password: fake.internet.password()
-	};
+	}
 
-	user.register(userPayload);
-	const token = auth.getAuth(userPayload);
-	prepareCrocodiles(token, 50);
-	return token;
+	user.register(userPayload)
+	const token = auth.getAuth(userPayload)
+	prepareCrocodiles(token, 50)
+	return token
 }
 
 export function searchCrocodiles(_token: string): void {
 	getCrocodiles(_token, response => {
-		rate.p80_within_1sec(response);
-		rate.errors(response, 200);
-	});
+		rate.p80_within_1sec(response)
+		rate.errors(response, 200)
+	})
 }
